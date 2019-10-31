@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
@@ -18,8 +16,6 @@ import keras
 np.random.seed(3)
 nb_class = 4
 
-
-# In[3]:
 
 
 # 데이터 생성하기

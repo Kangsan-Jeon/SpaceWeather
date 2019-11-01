@@ -1,7 +1,6 @@
 import numpy as np
 from astropy.io import fits
-import img_scale
-import matplotlib.pyplot as plt
+from public_fits_image import img_scale
 import os
 from scipy.misc import imsave, imresize
 

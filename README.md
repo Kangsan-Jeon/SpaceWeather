@@ -5,7 +5,7 @@ Writer : Kang-San Jeon (daiayjks@gmail.com)
 
 * Code
   * [Reference] TF_FLARE.py
-    * Reference code of laboratory of Yong-Jae Moon
+    * Reference code of laboratory of Yong-Jae Moon, Univ.Kyunghee, 
     * Use tensorflow
   * main.py
     * train and test code

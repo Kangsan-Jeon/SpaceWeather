@@ -6,12 +6,12 @@ Writer : Kang-San Jeon (daiayjks@gmail.com)
 * Code
   * [Reference] TF_FLARE.py
     * Reference code of laboratory of Yong-Jae Moon
-    * use tensorflow
+    * Use tensorflow
   * main.py
     * train and test code
-    * use keras
+    * Use keras
   * prepare_data.py
-    * to prepare image data to train and test
+    * To prepare image data to train and test
     * [Flare event label site](https://hesperia.gsfc.nasa.gov/goes/goes_event_listings/)
     
 * public_fits_image folder

@@ -83,5 +83,65 @@ def savePngFromFits(fits_dir, png_dir, scale="power", clip_min_value=.8e3, clip_
             continue
     return
 
+def change_datetime(string):
+    if len(string)==10:
+        string='0'+string
+
+    if string.count('-Jan-') != 0:
+        string = string[7:]+'01'+string[0:2]
+    elif string.count('-Feb-') != 0:
+        string = string[7:]+'02'+string[0:2]
+    elif string.count('-Mar-') != 0:
+        string = string[7:] + '03' + string[0:2]
+    elif string.count('-Apr-') != 0:
+        string = string[7:] + '04' + string[0:2]
+    elif string.count('-May-') != 0:
+        string = string[7:] + '05' + string[0:2]
+    elif string.count('-Jun-') != 0:
+        string = string[7:] + '06' + string[0:2]
+    elif string.count('-Jul-') != 0:
+        string = string[7:] + '07' + string[0:2]
+    elif string.count('-Aug-') != 0:
+        string = string[7:] + '08' + string[0:2]
+    elif string.count('-Sep-') != 0:
+        string = string[7:] + '09' + string[0:2]
+    elif string.count('-Oct-') != 0:
+        string = string[7:] + '10' + string[0:2]
+    elif string.count('-Nov-') != 0:
+        string = string[7:] + '11' + string[0:2]
+    elif string.count('-Dec-') != 0:
+        string = string[7:] + '12' + string[0:2]
+    return string
+
+def convertLabel(label_dir, output_name, flare_classes):
+    '''
+    # Flare event listing
+    # https://hesperia.gsfc.nasa.gov/goes/goes_event_listings/
+
+    :param label_dir: directory path of label text file ex) C:/home/
+    :param output_name: output text file name ex) output.txt
+    :param output_name: flare classes to want ex) ["C", "M", "X"]
+    :return:
+    '''
+    label_list = os.listdir(label_dir)
+    f_out = open(label_dir + output_name, 'w')
+    for file in label_list:
+        f_in = open(label_dir + file, 'r')
+        for i in range(6):
+            f_in.readline()
+        for line in f_in:
+            line = line.split()
+            if len(line) != 0:
+                line[0] = change_datetime(line[0])
+                if (line[4][0] in flare_classes):
+                    f_out.write('%s %s %s\n' % (line[0], line[1], line[4][0]))
+            else:
+                continue
+        f_in.close()
+    f_out.close()
+    return
+
+
+
 
 

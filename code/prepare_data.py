@@ -5,7 +5,9 @@ from scipy.stats import mode
 from public_fits_image import img_scale
 from scipy.misc import imsave, imresize
 import os
-import tqdm
+from tqdm import trange
+from datetime import timedelta, datetime
+import shutil
 
 def readFits(file_name, clip_min_value, clip_max_value):
     '''
@@ -58,7 +60,7 @@ def savePngFromFits(fits_dir, png_dir, scale="power", clip_min_value=.8e3, clip_
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
     file_list = os.listdir(fits_dir)
-    for i in tqdm.trange(len(file_list)):
+    for i in trange(len(file_list)):
         hdulist = fits.open(fits_dir + file_list[i])
         img_header = hdulist[0].header
         try:
@@ -141,7 +143,43 @@ def convertLabel(label_dir, output_name, flare_classes):
     f_out.close()
     return
 
+def classifyImage(image_dir, save_dir, label_file, time_duration):
+    '''
+    :param image_dir: image directory to classify ex) C:/home/
+    :param save_dir: save directory ex) C:/home/
+    :param label_file: label text file to refer
+    :param time_duration: time duration(hours) between image and flare
+    :return:
+    '''
+    none_dir = save_dir + "none/"
+    c_dir = save_dir + "C/"
+    m_dir = save_dir + "M/"
+    x_dir = save_dir + "X/"
+    image_file = os.listdir(image_dir)
+    classes = []
+    dt = timedelta(hours=time_duration)
+    for i in range(trange(len(image_file))):
+        classes.clear()
+        image_name = image_file[i]
+        image_time = datetime(year=int(image_name[8:12]), month=int(image_name[12:14]),
+                            day=int(image_name[14:16]), hour=int(image_name[17:19]),
+                            minute=int(image_name[19:21]))
+        label_txt = open(label_file)
+        for line in label_txt:
+            flare_time = datetime(year=int(line[:4]), month=int(line[4:6]),
+                                  day=int(line[6:8]), hour=int(line[9:11]),
+                                  minute=int(line[12:14]))
+            if (flare_time >= image_time and flare_time <= (image_time + dt)):
+                classes.append(line[15:16])
+            elif (flare_time > image_time + dt):
+                break
 
-
-
-
+        if (classes.count('X') != 0):
+            shutil.copy(image_dir + image_name, x_dir + image_name)
+        elif (classes.count('M') != 0):
+            shutil.copy(image_dir + image_name, m_dir + image_name)
+        elif (classes.count('C') != 0):
+            shutil.copy(image_dir + image_name, c_dir + image_name)
+        else:
+            shutil.copy(image_dir + image_name, none_dir + image_name)
+    return

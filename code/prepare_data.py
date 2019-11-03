@@ -35,7 +35,7 @@ def readFits(file_name, clip_min_value, clip_max_value):
 
         # plot image file
         plt.figure("Image")
-        plt.imshow(image_data[:, :], cmap='gray', vmin=.8e3, vmax=1.2e3)
+        plt.imshow(image_data[:, :], cmap='gray')
 
         plt.figure("Clipped Image")
         plt.axis('off')

@@ -5,11 +5,11 @@ Writer : Kang-San Jeon (daiayjks@gmail.com)
 
 ## Code
   * [Reference] TF_FLARE.py
-    * Reference code of laboratory of Yong-Jae Moon, Univ.Kyunghee, 
-    * Use tensorflow
+    * Reference code of laboratory of Yong-Jae Moon, Univ.Kyunghee, Republic of Korea
+    * Using tensorflow
   * main.py
     * train and test code
-    * Use keras
+    * Using keras
   * prepare_data.py
     * To prepare image data to train and test
     * readFits
